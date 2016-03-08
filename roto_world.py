@@ -9,9 +9,9 @@ from collections import defaultdict as dd
 class RWScraper(object):
     '''
     Class for grabbing player news from www.rotoworld.com/playernews/nfl/football-player-news
-    for any given day, default is the current day. 
-    Methods: scrape -     If a specific day is to be specified for scraping, 
-                          it should be formatted as a tuple: 
+    for any given day, default is the current day.
+    Methods: scrape -     If a specific day is to be specified for scraping,
+                          it should be formatted as a tuple:
                             (month, day, year)
                           and passed to the scrape method through the date argument.
 
@@ -39,7 +39,7 @@ class RWScraper(object):
         player_info = player_box.select('.player a')
         player_dict['team'] = player_info[1].contents[0]
         player_dict['name'] = player_info[0].contents[0]
-        player_dict['news'] = (player_box.select('p')[0].contents[0], 
+        player_dict['news'] = (player_box.select('p')[0].contents[0],
                                player_box.select('.impact')[0].contents[0])
         return player_dict
 
@@ -71,41 +71,18 @@ class RWScraper(object):
         self._get_player_news()
         os.remove('ghostdriver.log')
 
-    def print_news(self, impact=False):
-        tcd = {'Broncos':   {'fg': 208, 'bg': 18},
-               'Vikings':   {'fg': 11, 'bg': 54},
-               'Falcons':   {'fg': 0, 'bg': 1},
-               'Saints':    {'fg': 136, 'bg': 0},
-               'Chargers':  {'fg': 226, 'bg': 21},
-               'Lions':     {'fg': 27, 'bg': 244}, 
-               'Cowboys':   {'fg': 244, 'bg': 27}, 
-               'Browns':    {'fg': 202, 'bg': 52},
-               'Eagles':    {'fg': 231, 'bg': 29},
-               'Steelers':  {'fg': 11, 'bg': 0}, 
-               'Giants':    {'fg': 9, 'bg': 19},
-               'Patriots':  {'fg': 9, 'bg': 19},
-               'Buccaneers':{'fg': 0, 'bg': 9}, 
-               'Cardinals': {'fg': 0, 'bg': 1},
-               'Chiefs':    {'fg': 196, 'bg': 0},
-               'Jaguars':   {'fg': 11, 'bg': 30},
-               'Redskins':  {'fg': 231, 'bg': 88},
-               'Jets':      {'fg': 231, 'bg': 22},
-               'Ravens':    {'fg': 11, 'bg': 55},
-               'Colts':     {'fg': 15, 'bg': 18},
-               'Packers':   {'fg': 11, 'bg': 22},
-               'Titans':    {'fg': 231, 'bg': 4},
-               'Free Agent':{'fg': 0, 'bg': 231},
-               'Bills':     {'fg': 231, 'bg': 27},
-               'Texans':    {'fg': 18, 'bg': 196},
-               '49ers':     {'fg': 15, 'bg': 124},
-               'Seahawks':  {'fg': 10, 'bg': 21},
-               'Panthers':  {'fg': 0, 'bg': 33},
-               'Dolphins':  {'fg': 208, 'bg': 29},
-               'Bengals':   {'fg': 202, 'bg': 0},
-               'Rams':      {'fg': 184, 'bg': 19},
-               'Raiders':   {'fg': 247, 'bg': 0},
-               'Bears':     {'fg': 208, 'bg': 17},
-               'Player':    {'fg': 0, 'bg': 180}}
+    def print_news(self, impact=True):
+        tcd = {'76ers':   {'fg': 208, 'bg': 18},
+               'Pistons':   {'fg': 11, 'bg': 54},
+               'Cavaliers':   {'fg': 0, 'bg': 1},
+               'Heat':    {'fg': 136, 'bg': 0},
+               'Pelicans':  {'fg': 226, 'bg': 21},
+               'Mavericks':     {'fg': 27, 'bg': 244},
+               'Nuggets':   {'fg': 244, 'bg': 27},
+               'Nets':    {'fg': 202, 'bg': 52},
+               'Celtics':    {'fg': 231, 'bg': 29},
+               'Knicks':  {'fg': 11, 'bg': 0},
+               'Player':    {'fg': 0, 'bg': 180},
         for team in self._team_news.keys():
             print('%s%s %s %s' % (fg(tcd[team]['fg']), bg(tcd[team]['bg']), team, attr(0)))
             for player in self._team_news[team].keys():
